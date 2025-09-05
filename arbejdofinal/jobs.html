@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs | Arbejdo.dk</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: #111827;
+      padding: 15px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+      color: #60a5fa;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .job-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .job-card h2 {
+      margin-top: 0;
+      font-size: 1.5em;
+      color: #1f2937;
+    }
+    .meta {
+      color: #6b7280;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover {
+      background: #1e40af;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 1em;
+    }
+
+    /* Footer styling (kopieret fra index.html) */
+    footer {
+      background: #363739;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    footer p, footer a {
+      margin: 5px 0;
+      color: white;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Forside</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="kontakt.html">Kontakt</a>
+    <a href="login.html">Log ind</a>
+  </nav>
+
+  <div class="container">
+    <!-- Formular til at oprette job -->
+    <h1>Opret jobopslag</h1>
+    <form id="jobForm">
+      <label for="title">Jobtitel</label>
+      <input type="text" id="title" required>
+
+      <label for="company">Virksomhed</label>
+      <input type="text" id="company" required>
+
+      <label for="location">Lokation</label>
+      <input type="text" id="location" required>
+
+      <label for="type">Jobtype</label>
+      <select id="type" required>
+        <option value="Fuldtid">Fuldtid</option>
+        <option value="Deltid">Deltid</option>
+        <option value="Freelance">Freelance</option>
+      </select>
+
+      <label for="description">Jobbeskrivelse</label>
+      <textarea id="description" rows="4" required></textarea>
+
+      <button type="submit" class="btn">Tilføj jobopslag</button>
+    </form>
+
+    <!-- Liste over stillinger -->
+    <h1>Ledige stillinger</h1>
+    <div id="jobList">
+      <div class="job-card">
+        <h2>Frontend Udvikler</h2>
+        <p class="meta">Tech Solutions ApS – København | Fuldtid</p>
+        <p>Vi søger en frontend udvikler med erfaring i React og TailwindCSS.</p>
+        <a href="#" class="btn">Ansøg nu</a>
+      </div>
+
+      <div class="job-card">
+        <h2>Marketing Koordinator</h2>
+        <p class="meta">Nordic Media – Aarhus | Deltid</p>
+        <p>Brænder du for digital marketing og sociale medier?</p>
+        <a href="#" class="btn">Ansøg nu</a>
+      </div>
+
+      <div class="job-card">
+        <h2>Lagermedarbejder</h2>
+        <p class="meta">Logistik Danmark – Odense | Fuldtid</p>
+        <p>Vi søger en mødestabil lagermedarbejder til aftenhold.</p>
+        <a href="#" class="btn">Ansøg nu</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer (kopieret fra index.html) -->
+  <footer>
+    <p>&copy; 2025 Arbejdo.dk</p>
+    <p>
+      <a href="index.html">Forside</a> |
+      <a href="jobs.html">Jobs</a> |
+      <a href="kontakt.html">Kontakt</a> |
+      <a href="login.html">Log ind</a>
+    </p>
+    <p>Kontakt: info@arbejdo.dk | Telefon: 21 69 99 94</p>
+  </footer>
+
+  <script>
+    // Tilføj ny jobopslag funktion
+    const jobForm = document.getElementById("jobForm");
+    const jobList = document.getElementById("jobList");
+
+    jobForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const title = document.getElementById("title").value;
+      const company = document.getElementById("company").value;
+      const location = document.getElementById("location").value;
+      const type = document.getElementById("type").value;
+      const description = document.getElementById("description").value;
+
+      const jobCard = document.createElement("div");
+      jobCard.classList.add("job-card");
+      jobCard.innerHTML = `
+        <h2>${title}</h2>
+        <p class="meta">${company} – ${location} | ${type}</p>
+        <p>${description}</p>
+        <a href="#" class="btn">Ansøg nu</a>
+      `;
+
+      jobList.prepend(jobCard);
+      jobForm.reset();
+    });
+  </script>
+
+</body>
+</html>
