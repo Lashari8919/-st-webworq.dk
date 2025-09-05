@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lav Profil / Login - 18chatten</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background: #111;
+      color: #eee;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 500px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: #222;
+      border-radius: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      margin: 0.5rem 0 1rem;
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: none;
+      background: #111;
+      color: #eee;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      background: #d946ef;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .message {
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1 class="logo">18<span>chatten</span></h1>
+  <nav>
+    <a href="index.html">Forside</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>Opret Profil</h2>
+  <form id="register-form">
+    <input type="text" id="reg-name" placeholder="Dit navn" required />
+    <input type="email" id="reg-email" placeholder="Din email" required />
+    <input type="password" id="reg-password" placeholder="Adgangskode" required />
+    <input type="number" id="reg-age" placeholder="Alder" min="18" required />
+    <textarea id="reg-description" rows="4" placeholder="Skriv lidt om dig selv"></textarea>
+    <button type="submit">Opret Profil</button>
+    <div class="message" id="register-message"></div>
+  </form>
+
+  <hr style="margin:2rem 0; border-color:#333;" />
+
+  <h2>Log ind</h2>
+  <form id="login-form">
+    <input type="email" id="login-email" placeholder="Din email" required />
+    <input type="password" id="login-password" placeholder="Adgangskode" required />
+    <button type="submit">Log ind</button>
+    <div class="message" id="login-message"></div>
+  </form>
+</div>
+
+<script>
+  const USERS_KEY = '18chatten-users';
+
+  function getUsers() {
+    return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+  }
+
+  function saveUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  }
+
+  // Registrering
+  const registerForm = document.getElementById('register-form');
+  const registerMessage = document.getElementById('register-message');
+
+  registerForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim().toLowerCase();
+    const password = document.getElementById('reg-password').value;
+    const age = parseInt(document.getElementById('reg-age').value, 10);
+    const description = document.getElementById('reg-description').value.trim();
+
+    if (age < 18) {
+      registerMessage.style.color = 'red';
+      registerMessage.textContent = 'Du skal være mindst 18 år.';
+      return;
+    }
+
+    const users = getUsers();
+    if (users.some(u => u.email === email)) {
+      registerMessage.style.color = 'red';
+      registerMessage.textContent = 'Email er allerede registreret.';
+      return;
+    }
+
+    const newUser = { name, email, password, age, description };
+    users.push(newUser);
+    saveUsers(users);
+
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    registerMessage.style.color = '#f0abfc';
+    registerMessage.textContent = 'Profil oprettet! Du videresendes...';
+
+    setTimeout(() => window.location.href = 'profil-dashboard.html', 1000);
+  });
+
+  // Login
+  const loginForm = document.getElementById('login-form');
+  const loginMessage = document.getElementById('login-message');
+
+  loginForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const email = document.getElementById('login-email').value.trim().toLowerCase();
+    const password = document.getElementById('login-password').value;
+    const users = getUsers();
+
+    const user = users.find(u => u.email === email && u.password === password);
+    if (user) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      loginMessage.style.color = '#f0abfc';
+      loginMessage.textContent = 'Login succesfuldt! Videresender...';
+      setTimeout(() => window.location.href = 'profil-dashboard.html', 1000);
+    } else {
+      loginMessage.style.color = 'red';
+      loginMessage.textContent = 'Forkert email eller adgangskode.';
+    }
+  });
+  
+</script>
+<script src="lav-profil.js"></script>
+</body>
+</html>

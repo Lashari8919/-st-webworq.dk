@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ydelser - 18chatten</title>
+  <link rel="stylesheet" href="styles.css" />
+
+</head>
+
+<body>
+  <!-- Age Gate -->
+  <div id="age-gate" class="modal">
+    <div class="modal-content">
+      <h2>Voksne kun (18+)</h2>
+      <p>Du skal være 18 år eller ældre for at komme ind.</p>
+      <label>
+        <input type="checkbox" id="age-check" />
+        Jeg bekræfter jeg er 18+.
+      </label>
+      <div class="actions">
+        <button onclick="leaveSite()">Forlad</button>
+        <button id="enter-btn" disabled>Enter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site -->
+  <div id="site-content" style="display:none;">
+    <header>
+      <h1 class="logo">18<span>chatten</span></h1>
+      <nav>
+        <a href="index.html" class="active">Forsiden</a>
+        <a href="betingelser.html">Betingelser</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+    </header>
+
+    <main class="page-content">
+      <h2>Hvilke ydelser tilbyder vi?</h2>
+      <p>
+        På <strong>18chatten</strong> giver vi voksne brugere mulighed for at tilbyde og købe forskellige former
+        for underholdnings- og ledsagerydelser. Alle profiler er selvstændige og bestemmer selv deres priser
+        og indhold. Nedenfor finder du en oversigt over typiske ydelser, som udbydes gennem platformen.
+      </p>
+
+      <section class="services">
+        <h3>Populære ydelser</h3>
+        <ul>
+          <li>💬 <strong>Privat besøg</strong> – kontakt en profil for at i kan mødes.</li>
+          <li>📸 <strong>Billede- og videodeling</strong> – betal for eksklusivt indhold direkte fra profiler.</li>
+          <li>🤝 <strong>Ledsagelse & møder</strong> – muligheden for at arrangere møder eller events, aftalt mellem bruger og udbyder.</li>
+        </ul>
+      </section>
+
+      <section class="info">
+        <h3>Sådan fungerer det</h3>
+        <p>
+          Når du finder en profil, du er interesseret i, kan du tage kontakt gennem chatten.
+          Alle aftaler om pris, indhold og tid foregår direkte mellem dig og den person, du kontakter.
+          <br><br>
+          <em>18chatten faciliterer kontakten – vi står ikke for selve ydelserne eller betalingerne.</em>
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 18chatten. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const ageCheck = document.getElementById('age-check');
+    const enterBtn = document.getElementById('enter-btn');
+    const ageGate = document.getElementById('age-gate');
+    const siteContent = document.getElementById('site-content');
+
+    ageCheck.addEventListener('change', () => {
+      enterBtn.disabled = !ageCheck.checked;
+    });
+
+    enterBtn.addEventListener('click', () => {
+      if (ageCheck.checked) {
+        ageGate.style.display = 'none';
+        siteContent.style.display = 'block';
+      }
+    });
+
+    function leaveSite() {
+      window.location.href = 'https://www.google.com';
+    }
+  </script>
+</body>
+
+</html>

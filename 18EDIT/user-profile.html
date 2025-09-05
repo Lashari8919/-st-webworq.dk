@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brugerprofil - 18chatten</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { color:white; background:#111; font-family: Arial, sans-serif; }
+  header { display:flex; justify-content:space-between; padding:1rem; background:#222; }
+  nav a { margin-left:1rem; color:white; text-decoration:none; }
+  main { padding:2rem; }
+  img { width:200px; border-radius:10px; margin-bottom:1rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1 class="logo">18<span>chatten</span></h1>
+  <nav>
+    <a href="profil-dashboard.html">Tilbage til Dashboard</a>
+    <a href="index.html">Forside</a>
+  </nav>
+</header>
+
+<main>
+  <h2 id="userName"></h2>
+  <img id="userImage" src="" alt="">
+  <p><strong>Alder:</strong> <span id="userAge"></span></p>
+  <p><strong>Lokation:</strong> <span id="userLocation"></span></p>
+  <p><strong>Ydelser:</strong> <span id="userServices"></span></p>
+  <p><strong>Priser:</strong> <span id="userPrices"></span></p>
+</main>
+
+<script>
+const USERS_KEY = '18chatten-users';
+const urlParams = new URLSearchParams(window.location.search);
+const email = urlParams.get('email');
+
+let users = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+const user = users.find(u => u.email === email);
+
+if(user){
+  document.getElementById('userName').textContent = user.name;
+  document.getElementById('userImage').src = user.image || '';
+  document.getElementById('userAge').textContent = user.age;
+  document.getElementById('userLocation').textContent = user.location;
+  document.getElementById('userServices').textContent = user.services.join(', ');
+  document.getElementById('userPrices').textContent = user.prices.join(', ');
+}else{
+  document.querySelector('main').innerHTML = '<p>Bruger ikke fundet!</p>';
+}
+</script>
+</body>
+</html>
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontakt - 18chatten</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="kontakt.css" />
+</head>
+
+<body>
+  <!-- Age Gate -->
+  <div id="age-gate" class="modal">
+    <div class="modal-content">
+      <h2>Voksne kun (18+)</h2>
+      <p>Du skal være 18 år eller ældre for at komme ind.</p>
+      <label>
+        <input type="checkbox" id="age-check" />
+        Jeg bekræfter jeg er 18+.
+      </label>
+      <div class="actions">
+        <button onclick="leaveSite()">Forlad</button>
+        <button id="enter-btn" disabled>Enter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site -->
+  <div id="site-content" style="display:none;">
+    <header>
+      <h1 class="logo">18<span>chatten</span></h1>
+      <nav>
+        <a href="ydelser.html">Forsiden</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="betingelser.html">Betingelser</a>
+        <a href="kontakt.html" class="active">Kontakt</a>
+      </nav>
+    </header>
+
+    <main class="page-content">
+      <h2>Kontakt os</h2>
+      <p>
+        Har du spørgsmål eller brug for hjælp? Udfyld formularen herunder, så vender vi tilbage hurtigst muligt.
+      </p>
+
+      <form class="kontakt-form">
+        <label for="navn">Navn</label>
+        <input type="text" id="navn" name="navn" placeholder="Dit fulde navn" required />
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="din@email.dk" required />
+
+        <label for="besked">Besked</label>
+        <textarea id="besked" name="besked" rows="5" placeholder="Skriv din besked her..." required></textarea>
+
+        <button type="submit">Send besked</button>
+      </form>
+    </main>
+
+    <footer>
+      <p>© 2025 18chatten. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const ageCheck = document.getElementById('age-check');
+    const enterBtn = document.getElementById('enter-btn');
+    const ageGate = document.getElementById('age-gate');
+    const siteContent = document.getElementById('site-content');
+
+    ageCheck.addEventListener('change', () => {
+      enterBtn.disabled = !ageCheck.checked;
+    });
+
+    enterBtn.addEventListener('click', () => {
+      if (ageCheck.checked) {
+        ageGate.style.display = 'none';
+        siteContent.style.display = 'block';
+      }
+    });
+
+    function leaveSite() {
+      window.location.href = 'https://www.google.com';
+    }
+  </script>
+</body>
+
+</html>

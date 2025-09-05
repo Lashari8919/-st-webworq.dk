@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Dashboard - 18chatten</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background:#111; color:white; font-family: Arial, sans-serif; }
+    header { display:flex; justify-content:space-between; padding:1rem; background:#222; }
+    nav a { margin-left:1rem; color:white; text-decoration:none; }
+    main { padding:2rem; max-width:800px; margin:auto; }
+    input, textarea { width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:none; background:#222; color:white; }
+    button { padding:0.75rem; border:none; border-radius:6px; background:#d946ef; color:white; cursor:pointer; width:100%; margin-bottom:1rem; }
+    .image-preview { display:flex; gap:0.5rem; margin-bottom:1rem; }
+    .image-preview img { width:100px; height:100px; object-fit:cover; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <header>
+  <h1 class="logo">18<span>chatten</span></h1>
+  <nav>
+    <a href="index.html">Forside</a>
+    <!-- Profil-linket peger nu på minprofil.html -->
+    <a href="minprofil.html">Profil</a>
+  </nav>
+</header>
+
+    <!-- Denne knap peger også på minprofil.html -->
+  </form>
+</main>
+
+
+  <main>
+    <h2>Opret din profil</h2>
+    <form id="profileForm">
+      <label>Navn:</label>
+      <input type="text" id="name" required>
+
+      <label>Alder:</label>
+      <input type="number" id="age" required min="18">
+
+      <label>Lokation:</label>
+      <input type="text" id="location" required>
+
+      <label>Beskrivelse:</label>
+      <textarea id="description" rows="4" placeholder="Fortæl lidt om dig selv..."></textarea>
+
+      <label>Ydelser (komma-separeret):</label>
+      <input type="text" id="services" placeholder="Escort, Massage,...">
+
+      <label>Kontakt info (telefon/email):</label>
+      <input type="text" id="contact" placeholder="12345678 / email@example.com">
+
+      <label>Upload billeder (op til 5):</label>
+      <input type="file" id="imageUpload" accept="image/*" multiple>
+      <div class="image-preview" id="imagePreview"></div>
+
+      <a href="minprofil.html" class="btn">Opret Profil</a>
+    </form>
+  </main>
+
+  <script>
+    const USERS_KEY = '18chatten-users';
+    const CURRENT_USER_KEY = '18chatten-currentUser';
+    const profileForm = document.getElementById('profileForm');
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreview = document.getElementById('imagePreview');
+
+    let images = [];
+
+    imageUpload.addEventListener('change', () => {
+      images = [];
+      imagePreview.innerHTML = '';
+      const files = Array.from(imageUpload.files).slice(0, 5);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          images.push(e.target.result);
+          const imgEl = document.createElement('img');
+          imgEl.src = e.target.result;
+          imagePreview.appendChild(imgEl);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    profileForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const users = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+
+      const newUser = {
+        name: document.getElementById('name').value,
+        age: parseInt(document.getElementById('age').value, 10),
+        location: document.getElementById('location').value,
+        description: document.getElementById('description').value,
+        services: document.getElementById('services').value.split(',').map(s => s.trim()),
+        contact: document.getElementById('contact').value,
+        images: images
+      };
+
+      users.push(newUser);
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+
+      // Gem den nuværende bruger som logget ind
+      localStorage.setItem(CURRENT_USER_KEY, users.length - 1);
+
+      alert('Profil oprettet!');
+      window.location.href = 'Minprofil.html'; // send til profilside
+    });
+  </script>
+</body>
+</html>

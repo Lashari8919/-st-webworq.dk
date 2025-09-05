@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Betingelser - 18chatten</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="betingelser.css" />
+</head>
+
+<body>
+  <!-- Age Gate -->
+  <div id="age-gate" class="modal">
+    <div class="modal-content">
+      <h2>Voksne kun (18+)</h2>
+      <p>Du skal være 18 år eller ældre for at komme ind.</p>
+      <label>
+        <input type="checkbox" id="age-check" />
+        Jeg bekræfter jeg er 18+.
+      </label>
+      <div class="actions">
+        <button onclick="leaveSite()">Forlad</button>
+        <button id="enter-btn" disabled>Enter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site -->
+  <div id="site-content" style="display:none;">
+    <header>
+      <h1 class="logo">18<span>chatten</span></h1>
+      <nav>
+        <a href="index.html">Forsiden</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="betingelser.html" class="active">Betingelser</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+    </header>
+
+    <main class="page-content">
+      <h2>Vilkår og Betingelser</h2>
+      <p>
+        Når du bruger <strong>18chatten</strong>, accepterer du følgende regler og vilkår.  
+        Læs venligst disse betingelser grundigt, inden du benytter platformen.
+      </p>
+
+      <section>
+        <h3>1. Alderskrav</h3>
+        <p>
+          Du skal være minimum 18 år gammel for at oprette en profil eller benytte tjenesterne.
+          Vi forbeholder os retten til at suspendere eller slette profiler, der bryder denne regel.
+        </p>
+      </section>
+
+      <section>
+        <h3>2. Ansvar</h3>
+        <p>
+          Alle aftaler indgås direkte mellem brugerne. 18chatten er en platform, der formidler kontakt,
+          men vi er ikke ansvarlige for indhold, betaling eller private aftaler.
+        </p>
+      </section>
+
+      <section>
+        <h3>3. Adfærd</h3>
+        <p>
+          Du forpligter dig til at opføre dig respektfuldt overfor andre brugere.  
+          Chikane, misbrug eller ulovligt indhold vil medføre øjeblikkelig udelukkelse.
+        </p>
+      </section>
+
+      <section>
+        <h3>4. Indhold</h3>
+        <p>
+          Brugere er selv ansvarlige for det materiale (billeder, tekst, video), de deler på platformen.
+          Ulovligt indhold, herunder materiale med mindreårige, er strengt forbudt og vil blive anmeldt.
+        </p>
+      </section>
+
+      <section>
+        <h3>5. Ændringer</h3>
+        <p>
+          Vi forbeholder os retten til at ændre i disse betingelser løbende.  
+          Det er dit eget ansvar at holde dig opdateret.
+        </p>
+      </section>
+
+      <section class="info">
+        <h3>Kontakt</h3>
+        <p>
+          Har du spørgsmål til vores vilkår og betingelser, er du velkommen til at kontakte os via
+          <a href="kontakt.html">kontaktformularen</a>.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 18chatten. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const ageCheck = document.getElementById('age-check');
+    const enterBtn = document.getElementById('enter-btn');
+    const ageGate = document.getElementById('age-gate');
+    const siteContent = document.getElementById('site-content');
+
+    ageCheck.addEventListener('change', () => {
+      enterBtn.disabled = !ageCheck.checked;
+    });
+
+    enterBtn.addEventListener('click', () => {
+      if (ageCheck.checked) {
+        ageGate.style.display = 'none';
+        siteContent.style.display = 'block';
+      }
+    });
+
+    function leaveSite() {
+      window.location.href = 'https://www.google.com';
+    }
+  </script>
+</body>
+
+</html>

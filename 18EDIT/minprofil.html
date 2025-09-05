@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Min Profil - 18chatten</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background:#111; color:white; font-family: Arial, sans-serif; }
+    header { display:flex; justify-content:space-between; padding:1rem; background:#222; }
+    nav a { margin-left:1rem; color:white; text-decoration:none; }
+    main { padding:2rem; max-width:800px; margin:auto; }
+    .profile, .other-profile { border:1px solid #444; border-radius:6px; padding:1rem; margin-bottom:1rem; }
+    .image-gallery { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem; }
+    .image-gallery img { width:100px; height:100px; object-fit:cover; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="logo">18<span>chatten</span></h1>
+    <nav>
+      <a href="index.html">Forside</a>
+      <a href="profil-dashboard.html">Opret Profil</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Min Profil</h2>
+    <div id="profileContainer" class="profile"></div>
+
+    <h2>Andre profiler</h2>
+    <div id="otherProfilesContainer"></div>
+  </main>
+
+  <script>
+    const USERS_KEY = '18chatten-users';
+    const CURRENT_USER_KEY = '18chatten-currentUser';
+
+    const users = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+    const currentUserIndex = localStorage.getItem(CURRENT_USER_KEY);
+    const profileContainer = document.getElementById('profileContainer');
+    const otherProfilesContainer = document.getElementById('otherProfilesContainer');
+
+    // Vis den loggede brugers profil
+    if (currentUserIndex !== null && users[currentUserIndex]) {
+      const user = users[currentUserIndex];
+      profileContainer.innerHTML = `
+        <h3>${user.name}, ${user.age}</h3>
+        <p><strong>Lokation:</strong> ${user.location}</p>
+        <p><strong>Beskrivelse:</strong> ${user.description}</p>
+        <p><strong>Ydelser:</strong> ${user.services.join(', ')}</p>
+        <p><strong>Kontakt:</strong> ${user.contact}</p>
+        <div class="image-gallery">
+          ${user.images.map(img => `<img src="${img}" alt="Profil billede">`).join('')}
+        </div>
+      `;
+    } else {
+      profileContainer.innerHTML = '<p>Ingen profil fundet. Opret en profil først.</p>';
+    }
+
+    // Vis alle andre profiler
+    users.forEach((user, index) => {
+      if (index != currentUserIndex) {
+        const div = document.createElement('div');
+        div.className = 'other-profile';
+        div.innerHTML = `
+          <h3>${user.name}, ${user.age}</h3>
+          <p><strong>Lokation:</strong> ${user.location}</p>
+          <p><strong>Beskrivelse:</strong> ${user.description}</p>
+          <p><strong>Ydelser:</strong> ${user.services.join(', ')}</p>
+          <p><strong>Kontakt:</strong> ${user.contact}</p>
+          <div class="image-gallery">
+            ${user.images.map(img => `<img src="${img}" alt="Profil billede">`).join('')}
+          </div>
+        `;
+        otherProfilesContainer.appendChild(div);
+      }
+    });
+  </script>
+</body>
+</html>

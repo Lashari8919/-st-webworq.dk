@@ -1,0 +1,20 @@
+#profileContainer {
+  background: #222;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 300px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+#profileContainer ul {
+  list-style: none;
+  padding: 0;
+}
+
+#profileContainer li {
+  margin-bottom: 0.5rem;
+  background: #333;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
